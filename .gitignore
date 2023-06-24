@@ -2,3 +2,6 @@ venv/
 .ipynb_checkpoints/
 .idea/
 data/
+# saved models
+models/
+__pycache__/

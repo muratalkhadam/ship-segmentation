@@ -3,9 +3,9 @@ from keras.models import Model
 
 
 # Unet model
-def create_unet(filters=64,
-                img_size=(768, 768, 3),
-                dropout_rate=0.2,
+def create_unet(filters=8,
+                img_size=(256, 256, 3),
+                dropout_rate=0.1,
                 kernel_size=(3, 3),
                 pool_size=(2, 2),
                 strides=(2, 2)):
@@ -65,6 +65,6 @@ def create_unet(filters=64,
     outputs = Conv2D(1, (1, 1), activation='sigmoid', padding='same')(c9)
 
     model = Model(inputs=[inputs], outputs=[outputs], name='unet')
-    # print(model.summary())
+    print(model.summary())
 
     return model

@@ -1,6 +1,7 @@
-# Project: Semantic Segmentation Solution for Airbus Challenge Task (UNet Model Implementation)
+# Semantic segmentation solution for Airbus Challenge Task 
+## UNet Model Implementation with dice score target metric
 
-This project is a semantic segmentation solution for the [Airbus Ship Detection Challenge](https://www.kaggle.com/c/airbus-ship-detection/overview). The goal of the challenge is to develop an algorithm that can accurately identify ships in satellite images.
+This project is a semantic segmentation solution for the [Airbus Ship Detection Challenge](https://www.kaggle.com/c/airbus-ship-detection/overview). The goal of the challenge is to develop a model that can accurately identify ships in satellite images.
 
 ## Purpose
 The purpose of this project is to provide an implementation of the [UNet](https://arxiv.org/abs/1505.04597) model for semantic segmentation. By utilizing the UNet architecture, the project aims to accurately segment and identify ships in satellite images provided by the Airbus Ship Detection Challenge.
@@ -52,13 +53,27 @@ The `ship-segmentation` project is organized into the following folders:
 
 ### `Dice coefficient` was chosen as a metric for evaluating the performance of the model. Since in the tasks of semantic segmentation in most cases the ratio of background and foreground classes is not equal, the `accuracy` metric can incorrectly represent the performance of our model.
 ### *Dice coefficient* is a metric that is used to compare the similarity of two samples. In our case, the samples are the predicted mask and the actual segmentation mask. The formula for calculating is as follows:
+<div style="text-align:center">
+  <img src="docs/dice.png" alt="Dice coefficient">
+</div>
 
-> Recognized 1 ship in the image with `92.62%` dice coefficient.
+## The overall result of the target metric was 67%. 
+### I will show the results of testing on random data below:
+
+> #### Recognized 1 ship in the image with `92.62%` dice coefficient.
 ![Prediction 1](docs/prediction1.png)
 
-> Recognized 2 ships out of 3 in the image with `48.31%` dice coefficient.
+> #### Recognized 2 ships out of 3 in the image with `48.31%` dice coefficient.
 ![Prediction 2](docs/prediction2.png)
 
-> Recognized 4 ships out of 6 in the image with `68.78%` dice coefficient.
+> #### Recognized 4 ships out of 6 in the image with `68.78%` dice coefficient.
 ![Prediction 3](docs/prediction3.png)
 
+### The model demonstrates the ability to detect ships in the image; however, it struggles with accurately delineating the ship boundaries. This limitation arises from training the model on a limited number of epochs and a small dataset. To enhance the model's performance, it is crucial to train it on a more extensive dataset and for a more extended period.
+<div style="text-align:center">
+  <img src="docs/stats.png" alt="Stats">
+</div>
+
+### It is important to note that the current results are influenced by the computational limitations and hardware constraints of the training environment.
+
+# Will be thankful for any feedback! :)

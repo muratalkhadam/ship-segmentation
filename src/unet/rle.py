@@ -7,6 +7,16 @@ from tqdm import tqdm
 
 
 def segmentation_mask(encoded_pixels: str, size=(768, 768)):
+    """
+    Generates a segmentation mask from the given encoded pixels.
+
+    Args:
+        encoded_pixels (str): The encoded pixels representing the mask.
+        size (tuple, optional): The size of the mask, (768, 768) by default.
+
+    Returns:
+        np.ndarray: The segmentation mask.
+    """
     mask = np.zeros(size[0] * size[1])
 
     encoded_pixels = encoded_pixels.split()
@@ -21,6 +31,16 @@ def segmentation_mask(encoded_pixels: str, size=(768, 768)):
 
 
 def get_encoded_pixels_by_img_id(img_id, dataset):
+    """
+    Retrieves the encoded pixels for the given ImageId from the specific dataset.
+
+    Args:
+        img_id (str): The ImageId.
+        dataset (pd.DataFrame): The dataset containing information for each image.
+
+    Returns:
+        str: The encoded pixels for the image ID.
+    """
     encoded_pixels = dataset[dataset['ImageId'] == img_id]['EncodedPixels']
     if pd.isna(encoded_pixels.values):
         encoded_pixels = ' '
@@ -30,6 +50,17 @@ def get_encoded_pixels_by_img_id(img_id, dataset):
 
 
 def display_image_with_segmentation(img_id, dataset, img_folder):
+    """
+    Displays an image and its corresponding segmentation mask.
+
+    Args:
+        img_id (str): The ImageId.
+        dataset (pd.DataFrame): The dataset containing information for each image.
+        img_folder (str): The folder path where the images are stored.
+
+    Returns:
+        None
+    """
     encoded_pixels = get_encoded_pixels_by_img_id(img_id, dataset)
     segmentation = segmentation_mask(encoded_pixels)
 
@@ -46,6 +77,18 @@ def display_image_with_segmentation(img_id, dataset, img_folder):
 
 
 def fill_ds(ids, df, image_folder, img_size=(256, 256, 3)):
+    """
+    Fills the input and target arrays with the images and their corresponding segmentation masks by specific ids.
+
+    Args:
+        ids (list): The list of ImageIds.
+        df (pd.DataFrame): The dataset containing information for each image.
+        image_folder (str): The folder path where the images are stored.
+        img_size (tuple, optional): The desired size of the images and masks, (256, 256, 3) by default.
+
+    Returns:
+        tuple: A tuple containing the input and target arrays.
+    """
     x = np.zeros((len(ids), img_size[0], img_size[1], img_size[2]), dtype=np.float32)
     y = np.zeros((len(ids), img_size[0], img_size[1], 1), dtype=np.float32)
 
@@ -59,8 +102,8 @@ def fill_ds(ids, df, image_folder, img_size=(256, 256, 3)):
 
         segmentation = segmentation_mask(encoded_pixels)
         segmentation = np.asarray(Image.fromarray(segmentation)
-                                 .resize((img_size[0], img_size[1])),
-                                 dtype=np.float32).reshape((img_size[0], img_size[1], 1))
+                                  .resize((img_size[0], img_size[1])),
+                                  dtype=np.float32).reshape((img_size[0], img_size[1], 1))
         y[n] = segmentation
 
     return x, y

@@ -2,13 +2,26 @@ from keras.layers import Input, Conv2D, Conv2DTranspose, MaxPooling2D, concatena
 from keras.models import Model
 
 
-# Unet model
 def create_unet(filters=8,
                 img_size=(256, 256, 3),
                 dropout_rate=0.1,
                 kernel_size=(3, 3),
                 pool_size=(2, 2),
                 strides=(2, 2)):
+    """
+    Creates a U-Net model for image semantic segmentation.
+
+    Args:
+        filters (int, optional): The number of filters in the first layer, 8 by default.
+        img_size (tuple, optional): The input image size, (256, 256, 3) by default.
+        dropout_rate (float, optional): The dropout rate, 0.1 by default.
+        kernel_size (tuple, optional): The kernel size for convolutional layers, (3, 3) by default.
+        pool_size (tuple, optional): The pool size for max pooling layers, (2, 2) by default.
+        strides (tuple, optional): The strides for transpose convolutional layers, (2, 2) by default.
+
+    Returns:
+        keras.models.Model: The implemented U-Net model.
+    """
     inputs = Input(img_size)
 
     # Contraction path
